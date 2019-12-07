@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.text.DefaultHighlighter;
@@ -23,9 +24,13 @@ import javax.swing.text.JTextComponent;
 public class textEditorGui extends javax.swing.JFrame{
     String filename;
     Clipboard clipboard = getToolkit().getSystemClipboard();
+    
+    Stack <String> prev,next;
     public textEditorGui() {
         setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         initComponents();
+        prev = new Stack<String>();
+        next = new Stack<String>();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -39,6 +44,9 @@ public class textEditorGui extends javax.swing.JFrame{
         pasteButton = new javax.swing.JButton();
         cutButton = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
+        prevButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JToolBar.Separator();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -141,6 +149,35 @@ public class textEditorGui extends javax.swing.JFrame{
         topToolbar.add(cutButton);
         topToolbar.add(jSeparator6);
 
+        prevButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fprevious.png"))); // NOI18N
+        prevButton.setMnemonic('X');
+        prevButton.setToolTipText("Cut (Alt+X)");
+        prevButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        prevButton.setFocusable(false);
+        prevButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        prevButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        prevButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prevButtonActionPerformed(evt);
+            }
+        });
+        topToolbar.add(prevButton);
+
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fnext.png"))); // NOI18N
+        nextButton.setMnemonic('X');
+        nextButton.setToolTipText("Cut (Alt+X)");
+        nextButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nextButton.setFocusable(false);
+        nextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nextButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonActionPerformed(evt);
+            }
+        });
+        topToolbar.add(nextButton);
+        topToolbar.add(jSeparator7);
+
         searchField.setMargin(new java.awt.Insets(10, 10, 10, 10));
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +215,11 @@ public class textEditorGui extends javax.swing.JFrame{
 
         textArea.setColumns(20);
         textArea.setRows(5);
+        textArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textAreaKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -234,6 +276,8 @@ public class textEditorGui extends javax.swing.JFrame{
     private void newFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileActionPerformed
         textArea.setText("");
         setTitle("NotePad");
+        prev.clear();
+        next.clear();
     }//GEN-LAST:event_newFileActionPerformed
 
     private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
@@ -243,9 +287,12 @@ public class textEditorGui extends javax.swing.JFrame{
         if(fileDialog.getFile() != null) {
             filename = fileDialog.getDirectory() + fileDialog.getFile();
             setTitle(filename);
-        }
-        
-        try {
+            prev.clear();
+            next.clear();
+            
+            try {
+            prev.clear();
+            next.clear();
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             StringBuffer sb = new StringBuffer();
             
@@ -256,12 +303,16 @@ public class textEditorGui extends javax.swing.JFrame{
                 textArea.setText(sb.toString());
             }
             reader.close();
+            prev.add(textArea.getText());
+            textArea.setCaretPosition(0);
         } catch (IOException e) {
             System.out.println("File Not Found");
+        }
         }
     }//GEN-LAST:event_openFileActionPerformed
 
     private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
+        if(filename == null ) {
         FileDialog fileDialog = new FileDialog(textEditorGui.this,"Save File",FileDialog.SAVE);
         fileDialog.setVisible(true);
         
@@ -269,8 +320,9 @@ public class textEditorGui extends javax.swing.JFrame{
             filename = fileDialog.getDirectory() + fileDialog.getFile();
             setTitle(filename);
         }
-        
-        try {
+        }
+            
+            try {
             FileWriter filewriter = new FileWriter(filename);
             filewriter.write(textArea.getText());
             setTitle(filename);
@@ -278,6 +330,7 @@ public class textEditorGui extends javax.swing.JFrame{
         } catch(IOException e) {
             System.out.println("File not Found");
         }
+        
     }//GEN-LAST:event_saveFileActionPerformed
 
     private void cutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutButtonActionPerformed
@@ -307,13 +360,33 @@ public class textEditorGui extends javax.swing.JFrame{
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        if(!next.empty()) {
+            textArea.setText(next.peek());
+            prev.add(next.pop());
+        }
+    }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
+        int pos=textArea.getCaretPosition();
+        if(!prev.empty()) {
+            textArea.setText(prev.peek());
+            next.add(prev.pop());
+            textArea.setCaretPosition(pos -1);
+        }
+    }//GEN-LAST:event_prevButtonActionPerformed
+
+    private void textAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaKeyTyped
+        prev.add(textArea.getText());
+    }//GEN-LAST:event_textAreaKeyTyped
+    
+    
     
     class myHighter extends DefaultHighlighter.DefaultHighlightPainter {
-        
         public myHighter(Color c) {
             super(c);
         }
-        
     }
     
     DefaultHighlighter.DefaultHighlightPainter  highlighter = new myHighter(Color.YELLOW);
@@ -362,9 +435,12 @@ public class textEditorGui extends javax.swing.JFrame{
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JButton newFile;
+    private javax.swing.JButton nextButton;
     private javax.swing.JButton openFile;
     private javax.swing.JButton pasteButton;
+    private javax.swing.JButton prevButton;
     private javax.swing.JButton saveFile;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
