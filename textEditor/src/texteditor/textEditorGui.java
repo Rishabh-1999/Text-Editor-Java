@@ -35,10 +35,9 @@ public class textEditorGui extends javax.swing.JFrame{
         newFile = new javax.swing.JButton();
         openFile = new javax.swing.JButton();
         saveFile = new javax.swing.JButton();
-        cutB = new javax.swing.JButton();
-        copyB = new javax.swing.JButton();
-        pasteB = new javax.swing.JButton();
-        compileB = new javax.swing.JButton();
+        copyButton = new javax.swing.JButton();
+        pasteButton = new javax.swing.JButton();
+        cutButton = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -49,6 +48,8 @@ public class textEditorGui extends javax.swing.JFrame{
         textArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(700, 700));
+        setPreferredSize(new java.awt.Dimension(700, 700));
 
         topToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 255), null));
         topToolbar.setFloatable(false);
@@ -97,60 +98,47 @@ public class textEditorGui extends javax.swing.JFrame{
         });
         topToolbar.add(saveFile);
 
-        cutB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cutb.png"))); // NOI18N
-        cutB.setMnemonic('X');
-        cutB.setToolTipText("Cut (Alt+X)");
-        cutB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cutB.setFocusable(false);
-        cutB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        cutB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        cutB.addActionListener(new java.awt.event.ActionListener() {
+        copyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/copyb.png"))); // NOI18N
+        copyButton.setMnemonic('C');
+        copyButton.setToolTipText("Copy (Alt+C)");
+        copyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        copyButton.setFocusable(false);
+        copyButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        copyButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cutBActionPerformed(evt);
+                copyButtonActionPerformed(evt);
             }
         });
-        topToolbar.add(cutB);
+        topToolbar.add(copyButton);
 
-        copyB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/copyb.png"))); // NOI18N
-        copyB.setMnemonic('C');
-        copyB.setToolTipText("Copy (Alt+C)");
-        copyB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        copyB.setFocusable(false);
-        copyB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        copyB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        copyB.addActionListener(new java.awt.event.ActionListener() {
+        pasteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pasteb.png"))); // NOI18N
+        pasteButton.setMnemonic('P');
+        pasteButton.setToolTipText("Paste (Alt+P)");
+        pasteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pasteButton.setFocusable(false);
+        pasteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pasteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pasteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyBActionPerformed(evt);
+                pasteButtonActionPerformed(evt);
             }
         });
-        topToolbar.add(copyB);
+        topToolbar.add(pasteButton);
 
-        pasteB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pasteb.png"))); // NOI18N
-        pasteB.setMnemonic('P');
-        pasteB.setToolTipText("Paste (Alt+P)");
-        pasteB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pasteB.setFocusable(false);
-        pasteB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pasteB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pasteB.addActionListener(new java.awt.event.ActionListener() {
+        cutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cutb.png"))); // NOI18N
+        cutButton.setMnemonic('X');
+        cutButton.setToolTipText("Cut (Alt+X)");
+        cutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cutButton.setFocusable(false);
+        cutButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cutButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pasteBActionPerformed(evt);
+                cutButtonActionPerformed(evt);
             }
         });
-        topToolbar.add(pasteB);
-
-        compileB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/compileb.png"))); // NOI18N
-        compileB.setToolTipText("Compile");
-        compileB.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        compileB.setFocusable(false);
-        compileB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        compileB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        compileB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                compileBActionPerformed(evt);
-            }
-        });
-        topToolbar.add(compileB);
+        topToolbar.add(cutButton);
         topToolbar.add(jSeparator6);
 
         searchField.setMargin(new java.awt.Insets(10, 10, 10, 10));
@@ -161,7 +149,7 @@ public class textEditorGui extends javax.swing.JFrame{
         });
         topToolbar.add(searchField);
 
-        searchButton.setText("Search");
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/findreplaceb.png"))); // NOI18N
         searchButton.setFocusable(false);
         searchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         searchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -212,40 +200,40 @@ public class textEditorGui extends javax.swing.JFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(topToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 343, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(topToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(29, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(topToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 683, Short.MAX_VALUE)))
+                    .addGap(0, 621, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-//        serachTextArea(textArea, searchField.getText());
+    serachTextArea(textArea,searchField.getText());
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void newFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileActionPerformed
         textArea.setText("");
-        setTitle(filename);
+        setTitle("NotePad");
     }//GEN-LAST:event_newFileActionPerformed
 
     private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
@@ -274,24 +262,47 @@ public class textEditorGui extends javax.swing.JFrame{
     }//GEN-LAST:event_openFileActionPerformed
 
     private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
+        FileDialog fileDialog = new FileDialog(textEditorGui.this,"Save File",FileDialog.SAVE);
+        fileDialog.setVisible(true);
         
+        if(fileDialog.getFile() != null) {
+            filename = fileDialog.getDirectory() + fileDialog.getFile();
+            setTitle(filename);
+        }
+        
+        try {
+            FileWriter filewriter = new FileWriter(filename);
+            filewriter.write(textArea.getText());
+            setTitle(filename);
+            filewriter.close();
+        } catch(IOException e) {
+            System.out.println("File not Found");
+        }
     }//GEN-LAST:event_saveFileActionPerformed
 
-    private void cutBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutBActionPerformed
-        
-    }//GEN-LAST:event_cutBActionPerformed
+    private void cutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutButtonActionPerformed
+        String cutString = textArea.getSelectedText();
+        StringSelection cutselecttion = new StringSelection(cutString);
+        clipboard.setContents(cutselecttion,cutselecttion);
+        textArea.replaceRange("",textArea.getSelectionStart(), textArea.getSelectionEnd());
+    }//GEN-LAST:event_cutButtonActionPerformed
 
-    private void copyBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyBActionPerformed
-        
-    }//GEN-LAST:event_copyBActionPerformed
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        String copyText = textArea.getSelectedText();
+        StringSelection copysel = new StringSelection(copyText);
+        clipboard.setContents(copysel,copysel);
+    }//GEN-LAST:event_copyButtonActionPerformed
 
-    private void pasteBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteBActionPerformed
-        
-    }//GEN-LAST:event_pasteBActionPerformed
-
-    private void compileBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compileBActionPerformed
-        
-    }//GEN-LAST:event_compileBActionPerformed
+    private void pasteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteButtonActionPerformed
+        try {
+            Transferable pasteText = clipboard.getContents(textEditorGui.this);
+            String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
+            textArea.replaceRange(sel,textArea.getSelectionStart(),textArea.getSelectionEnd());
+            
+        } catch (Exception e) {
+            System.out.println("Paste Didn't work");
+        }
+    }//GEN-LAST:event_pasteButtonActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         System.exit(0);
@@ -344,9 +355,8 @@ public class textEditorGui extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton compileB;
-    private javax.swing.JButton copyB;
-    private javax.swing.JButton cutB;
+    private javax.swing.JButton copyButton;
+    private javax.swing.JButton cutButton;
     private javax.swing.JButton exit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -354,7 +364,7 @@ public class textEditorGui extends javax.swing.JFrame{
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JButton newFile;
     private javax.swing.JButton openFile;
-    private javax.swing.JButton pasteB;
+    private javax.swing.JButton pasteButton;
     private javax.swing.JButton saveFile;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
