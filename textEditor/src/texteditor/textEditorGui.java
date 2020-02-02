@@ -62,6 +62,7 @@ public class textEditorGui extends javax.swing.JFrame{
         topToolbar.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 255), null));
         topToolbar.setFloatable(false);
         topToolbar.setRollover(true);
+        topToolbar.setToolTipText("Search Button");
         topToolbar.setMargin(new java.awt.Insets(5, 0, 5, 0));
 
         newFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/newb.png"))); // NOI18N
@@ -151,7 +152,7 @@ public class textEditorGui extends javax.swing.JFrame{
 
         prevButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fprevious.png"))); // NOI18N
         prevButton.setMnemonic('X');
-        prevButton.setToolTipText("Cut (Alt+X)");
+        prevButton.setToolTipText("Undo");
         prevButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         prevButton.setFocusable(false);
         prevButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -165,7 +166,7 @@ public class textEditorGui extends javax.swing.JFrame{
 
         nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fnext.png"))); // NOI18N
         nextButton.setMnemonic('X');
-        nextButton.setToolTipText("Cut (Alt+X)");
+        nextButton.setToolTipText("Redo");
         nextButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         nextButton.setFocusable(false);
         nextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -178,6 +179,7 @@ public class textEditorGui extends javax.swing.JFrame{
         topToolbar.add(nextButton);
         topToolbar.add(jSeparator7);
 
+        searchField.setToolTipText("Search");
         searchField.setMargin(new java.awt.Insets(10, 10, 10, 10));
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
